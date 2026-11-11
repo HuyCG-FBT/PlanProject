@@ -24,7 +24,7 @@ Bạn là mô hình **Executor (Gemini 3.8 Flash)** chuyên trách thực thi m�
 ## 3. Quy Chuẩn Báo Cáo Bàn Giao (Handover Protocol)
 Khi hoàn thành task:
 * Cập nhật `[x]` vào `.plans/task_plan.md`.
-* Thêm tối đa **3-5 dòng** vào `.plans/progress.md` theo mẫu:
+* Dùng `write_file` với `Append: true` (tuyệt đối **không** dùng `edit_file` ghi đè mục cũ) để nối thêm tối đa **3-5 dòng** vào cuối `.plans/progress.md` theo mẫu:
   ```markdown
   ### [YYYY-MM-DD HH:MM] Task X.X Hoàn thành bởi Flash
   - Files sửa/tạo: `src/path/to/file.py`

@@ -1,6 +1,6 @@
 # KẾ HOẠCH: Sửa lỗi bộ setup Architect–Executor
 
-- **Trạng thái:** Ready
+- **Trạng thái:** Done
 - **Architect:** Claude Opus (lập kế hoạch, 2026-11-11 13:56)
 - **Executor:** Gemini 3.8 Flash
 - **Thư mục gốc (ROOT):** `d:\FPT\Harness\SteamBP`. Mọi đường dẫn bên dưới đều tính từ ROOT.
