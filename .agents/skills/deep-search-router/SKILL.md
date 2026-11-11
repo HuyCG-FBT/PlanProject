@@ -1,27 +1,27 @@
 ---
 name: deep-search-router
-description: Định tuyến tra cứu và tìm kiếm thông tin chuyên sâu đa nền tảng không tốn phí API bằng Agent Reach, Jina Reader, Firecrawl và GitHub CLI. Cách ly hoàn toàn dữ liệu thô khỏi cửa sổ ngữ cảnh chính.
+description: Định tuyến tra cứu web/tài liệu/repo sao cho dữ liệu thô không đi vào context chính. Dùng khi cần đọc URL, tra docs, tìm code mẫu, hoặc khảo sát cộng đồng.
 ---
 
-# Bộ Định Tuyến Tìm Kiếm Sâu (Deep Search Router)
+# Deep Search Router
 
-Kỹ năng này hướng dẫn cách thu thập tài liệu kỹ thuật, nghiên cứu đối thủ, đọc repo GitHub và quét bài viết chuyên sâu mà **không làm nổ token của mô hình chính**.
+## Bước 0 — Kiểm tra công cụ trước khi dùng
+Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `cmd /c "where <tên>"`. Không có thì xuống tầng thấp hơn, **không tự cài**.
 
-## 1. Bản Đồ Định Tuyến Nhanh (Search Routing Matrix)
+## Tầng 1 — Luôn có sẵn (ưu tiên)
+| Nhu cầu | Cách làm |
+|---|---|
+| Tìm kiếm tổng quan | tool `search_web` |
+| Đọc 1 URL thành Markdown | `curl.exe -s "https://r.jina.ai/<URL>" -o .plans/scratch/<slug>.md` |
 
-| Nhu cầu thông tin | Công cụ tối ưu | Lệnh thực thi cách ly |
-| :--- | :--- | :--- |
-| **Đọc bài viết / docs bất kỳ từ URL** | **Jina Reader (Agent Reach)** | `curl -s "https://r.jina.ai/<URL>" -o .plans/scratch_page.md` |
-| **Tìm code mẫu / Repo trên GitHub** | **GitHub CLI / Agent Reach** | `gh search code "<query>" --language <lang>` |
-| **Tìm kiếm cộng đồng (Reddit, Bilibili, V2EX)**| **Agent Reach CLI** | `agent-reach <kênh> search "<query>"` |
-| **Cào web cấu trúc & trích xuất JSON** | **Firecrawl CLI** | `firecrawl search "<query>" -o .firecrawl/res.json --json` |
-| **Tìm kiếm web tổng quan** | **Native Search Web** | Dùng tool `search_web` tích hợp sẵn |
+## Tầng 2 — Có điều kiện
+*(Hiện chưa có công cụ khả dụng ở tầng này)*
 
----
+## Tầng 3 — Tùy chọn (hiện CHƯA cài, chỉ dùng nếu người dùng tự cài)
+`gh` (GitHub CLI), `firecrawl`, `mcporter` + Exa.
 
-## 2. Quy Tắc Cách Ly Dữ Liệu Thô (Zero-Pollution Rule)
-1. **Không in HTML/JSON thô ra chat:** Mọi kết quả từ `curl`, `firecrawl` hoặc `agent-reach` phải được lưu vào thư mục đệm tạm thời (như `.plans/scratch/` hoặc `.firecrawl/`).
-2. **Ủy quyền cho Subagent Flash lọc dữ liệu:**
-   - Dùng Subagent Flash để đọc file tạm, chắt lọc ra danh sách nguồn uy tín và các kết luận quan trọng (tối đa 30 dòng).
-   - Ghi kết quả cô đọng này vào `.plans/findings.md`.
-3. **Architect chỉ đọc `.plans/findings.md`:** Architect không bao giờ đọc dữ liệu thô chưa qua lọc.
+## Quy tắc cách ly dữ liệu
+1. Output thô (HTML/JSON/Markdown dài) → ghi vào `.plans/scratch/` (đã gitignore). Không in ra chat.
+2. Đọc file scratch theo đoạn (`read_file` có StartLine/EndLine) hoặc lọc bằng `Select-String`.
+3. Ghi kết luận ≤30 dòng vào `.plans/findings.md`, **mỗi ý kèm URL nguồn**.
+4. Architect chỉ đọc `findings.md`.

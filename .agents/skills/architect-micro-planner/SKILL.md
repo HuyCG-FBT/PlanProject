@@ -12,7 +12,7 @@ Mỗi task trong `.plans/task_plan.md` phải cung cấp đủ 5 thành tố sau
 
 1. **Context Slice (Phạm vi đọc hạn chế):**
    - Chỉ định chính xác đường dẫn file và khoảng dòng mà Flash được phép đọc:
-     *Ví dụ:* `Đọc file:///d:/FPT/Harness/SteamBP/src/models/card.py (chỉ đọc các dòng 10-45)`.
+     *Ví dụ:* `Đọc src/models/card.py#L10-L45 (đường dẫn tương đối từ ROOT)`.
    - *Cấm Flash đọc mò các file khác.*
 
 2. **Target File (Tập tin đích):**

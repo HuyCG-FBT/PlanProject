@@ -3,7 +3,7 @@
 ---
 
 ## 1. TỔNG QUAN XU HƯỚNG KỸ THUẬT AI HIỆN ĐẠI
-Trong các phòng thí nghiệm AI hàng đầu (Google DeepMind, Anthropic, OpenAI) và các đội ngũ công nghệ tiên tiến (Vercel, Cursor, Factory), cách thức làm việc giữa con người và AI đã chuyển dịch mạnh mẽ từ **Single-prompting (Ra lệnh đơn lẻ)** sang **Agentic Tiered Workflows (Quy trình tác tử phân tầng)**.
+Các bộ skill mã nguồn mở phổ biến cho coding agent (xem mục Nguồn) cho thấy xu hướng chuyển từ ra lệnh đơn lẻ sang quy trình phân tầng: lập kế hoạch ra file, chia task nhỏ, thực thi có kiểm thử. Báo cáo này tổng hợp các pattern đó; các nhận định chưa có nguồn được ghi rõ là "kinh nghiệm thực hành".
 
 ### Vấn đề của phương pháp truyền thống:
 * **Lãng phí chi phí & Quota:** Dùng mô hình siêu lớn (Opus, Pro, o1/o3) cho mọi thao tác nhỏ nhặt (gõ boilerplate, đổi tên biến, đọc log dài) làm bùng nổ chi phí API và nhanh chóng cạn kiệt giới hạn token (Rate Limits / Context Quota).
@@ -15,6 +15,7 @@ Trong các phòng thí nghiệm AI hàng đầu (Google DeepMind, Anthropic, Ope
 ## 2. CÁC PATTERN CHUẨN CỦA KỸ SƯ AI CHUYÊN NGHIỆP
 
 ### Pattern 1: Architect - Executor Pattern (Kiến trúc sư & Người thực thi)
+> Kinh nghiệm thực hành (chưa có nguồn chính thức).
 Đây là pattern cốt lõi của các hệ thống tự động hóa lập trình hiện đại:
 ```
                 ┌──────────────────────────────────────┐
@@ -101,9 +102,24 @@ Trong các dự án AI chuyên nghiệp, việc tìm kiếm tài liệu từ cá
 
 ## 6. KẾT LUẬN & QUY TẮC VẬN HÀNH CHUẨN TRONG WORKSPACE
 Hệ thống hiện tại đã đạt chuẩn công nghiệp:
-- **Tập tin chỉ thị:** [AGENTS.md](file:///d:/FPT/Harness/SteamBP/AGENTS.md)
+- **Tập tin chỉ thị:** `AGENTS.md`
 - **Kỹ năng chuyên biệt:**
   - `architect-micro-planner`: Giúp model mạnh tạo kế hoạch chi tiết không kẽ hở.
   - `flash-executor-runbook`: Giúp Gemini 3.8 Flash thực thi chuẩn xác, tiết kiệm token.
   - `deep-search-router`: Giúp tra cứu sâu đa nền tảng không phát sinh phí API và không ô nhiễm ngữ cảnh.
-- **Tệp lưu trữ trạng thái:** [task_plan.md](file:///d:/FPT/Harness/SteamBP/.plans/template_task_plan.md), [findings.md](file:///d:/FPT/Harness/SteamBP/.plans/findings.md), [progress.md](file:///d:/FPT/Harness/SteamBP/.plans/progress.md).
+- **Tệp lưu trữ trạng thái:** `.plans/task_plan.md`, `.plans/findings.md`, `.plans/progress.md`.
+
+---
+
+## 7. HẠN CHẾ ĐÃ BIẾT CỦA SETUP HIỆN TẠI
+- Chưa đo mức tiết kiệm token; mọi nhận định về "tiết kiệm" là định tính.
+- `gh`, `firecrawl`, `mcporter`/Exa chưa cài; tra cứu dựa vào `search_web`, Jina Reader và `agent-reach` (nếu T2 OK).
+- Ranh giới Architect/Executor là quy ước trong `AGENTS.md`, không có cơ chế cưỡng chế. Model nào được chọn lúc bấm Proceed sẽ là model thực thi.
+
+## 8. NGUỒN
+- planning-with-files: https://github.com/OthmanAdi/planning-with-files
+- planning-and-task-breakdown: https://github.com/addyosmani/agent-skills
+- executing-plans: https://github.com/obra/superpowers
+- Agent Reach: https://github.com/Panniantong/Agent-Reach
+- Antigravity Skills: https://antigravity.google/docs/skills
+- Antigravity Rules: https://antigravity.google/docs/rules-workflows

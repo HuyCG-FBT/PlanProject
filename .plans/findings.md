@@ -1,4 +1,4 @@
-# TẬP KHOA HỌC & KẾT QUẢ TRA CỨU (FINDINGS CACHE)
+# KẾT QUẢ TRA CỨU (FINDINGS CACHE)
 
 Tài liệu này lưu trữ toàn bộ các phát hiện kỹ thuật, tài liệu API, đường dẫn và kết quả tra cứu từ `agent-reach`, `Jina Reader`, `Firecrawl` hoặc tài liệu bên ngoài.
 *Mục đích: Tra cứu 1 lần, ghi nhớ vĩnh viễn trên đĩa, tránh việc mỗi agent phải tìm lại nhiều lần gây lãng phí token.*
@@ -21,6 +21,6 @@ Tài liệu này lưu trữ toàn bộ các phát hiện kỹ thuật, tài li�
 - **Dữ liệu người chơi:** Không lưu trong thư mục game, tách biệt tại `%USERPROFILE%\AppData\LocalLow\zup games\Booster Pack Heroes`.
 
 ### [2026-11-11] Cấu hình kênh tra cứu sâu Agent Reach
-- CLI: `agent-reach` v1.5.0 đã cài đặt toàn cục.
+- CLI: `agent-reach` v1.5.0.
 - Kênh trực tiếp: Jina Reader (`curl -s "https://r.jina.ai/<URL>"`), V2EX API, RSS/Atom, Bilibili search.
 - Kỹ năng tích hợp: `Panniantong/Agent-Reach@agent-reach` tại `~/.gemini/config/skills/agent-reach`.

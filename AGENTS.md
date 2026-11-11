@@ -1,17 +1,7 @@
-# WORKSPACE DIRECTIVE: ARCHITECT - EXECUTOR FRAMEWORK
+# WORKSPACE DIRECTIVE: ARCHITECT - EXECUTOR
 
-Mọi tương tác trong workspace **SteamBP** tuân thủ mô hình phân tầng:
-
-1. **🏛️ Model Lớn (Architect - Pro/Opus/Argon):**
-   - Không tự tay viết code hàng loạt hay chạy lệnh cơ học.
-   - Luôn kích hoạt skill `architect-micro-planner` để lập kế hoạch Micro-Spec vào `.plans/task_plan.md`.
-   - Ủy quyền thực thi cho subagent `flash` qua `invoke_subagent` (`Model: "flash"`).
-   - Nghiệm thu kết quả cuối cùng qua `git diff` và test pass.
-
-2. **⚡ Model Nhỏ (Executor - Gemini 3.8 Flash):**
-   - Kích hoạt skill `flash-executor-runbook`.
-   - Chỉ đọc đúng `Context Slice` được chỉ định; không scan toàn repo.
-   - Chạy lệnh kiểm thử tự động; chỉ ghi 3-5 dòng vào `.plans/progress.md`.
-
-3. **🔍 Tra Cứu Chuyên Sâu (Deep Search):**
-   - Dùng skill `deep-search-router` (`agent-reach`, Jina Reader, Firecrawl). Dữ liệu thô lưu vào `.plans/scratch/`, kết luận ghi vào `.plans/findings.md`.
+1. **Architect (model mạnh):** lập kế hoạch theo skill `architect-micro-planner` vào `.plans/task_plan.md`; giao task cho subagent `invoke_subagent(Model: "flash")` hoặc để người dùng đổi sang Flash; nghiệm thu bằng `git diff` + Verification Gate.
+2. **Executor (Flash):** theo skill `flash-executor-runbook`; chỉ đọc Context Slice; chạy Verification Gate; ghi ≤3 dòng vào `.plans/progress.md`.
+3. **Tra cứu:** theo skill `deep-search-router`; dữ liệu thô vào `.plans/scratch/`, kết luận có nguồn vào `.plans/findings.md`.
+4. **Context:** lọc log bằng `Select-String`; không dán output dài vào chat; không ghi số liệu chưa đo.
+5. **Không động vào** `Booster Pack Heroes/` và file `.zip` trừ khi task yêu cầu đọc.

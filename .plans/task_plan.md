@@ -42,7 +42,7 @@ desktop.ini
 
 **Nếu FAIL:** `git commit` báo thiếu user.name/email thì DỪNG, báo người dùng tự cấu hình. Không tự đặt tên/email giả.
 
-- [ ] T1 xong
+- [x] T1 xong
 
 ---
 
@@ -65,7 +65,7 @@ desktop.ini
 - Vẫn còn `{{` sau bước 3: **KHÔNG sửa tay** SKILL.md toàn cục. Ghi vào progress là "skill render failed", rồi chuyển sang T3 nhưng dùng nhánh FALLBACK của T3.
 - `agent-reach channels` không tồn tại: ghi lại, dùng nhánh FALLBACK của T3.
 
-- [ ] T2 xong (ghi rõ: OK / FALLBACK)
+- [x] T2 xong (FALLBACK)
 
 ---
 
@@ -110,7 +110,7 @@ Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `
 - `Select-String -Path .agents\skills\deep-search-router\SKILL.md -Pattern "firecrawl search|gh search code|agent-reach <kênh>"` → không có kết quả.
 - Tạo thư mục `.plans/scratch/`, rồi chạy `curl.exe -s "https://r.jina.ai/https://example.com" -o .plans/scratch/test.md; (Get-Item .plans/scratch/test.md).Length -gt 0` → `True`. Xong thì xóa `test.md`.
 
-- [ ] T3 xong
+- [x] T3 xong
 
 ---
 
@@ -134,7 +134,7 @@ Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `
 - `Test-Path .agents\rules` → `False`
 - `(Get-Content AGENTS.md).Count` ≤ 12
 
-- [ ] T4 xong
+- [x] T4 xong
 
 ---
 
@@ -177,7 +177,7 @@ Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `
 **Verification Gate:**
 - `Select-String -Path .plans\template_task_plan.md -Pattern "file:///|pytest tests/test_feature"` → không có kết quả.
 
-- [ ] T5 xong
+- [x] T5 xong
 
 ---
 
@@ -193,7 +193,7 @@ Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `
 **Verification Gate:**
 - `Select-String -Path .agents\skills\*\SKILL.md,.plans\*.md -Pattern "file:///d:"` → không có kết quả. Riêng `task_plan.md` (file này) được loại trừ.
 
-- [ ] T6 xong
+- [x] T6 xong
 
 ---
 
@@ -230,7 +230,7 @@ Chỉ dùng công cụ đã xác minh có trên máy. Chưa chắc thì chạy `
 - `Select-String -Path reports\AI_ENGINEERING_AGENTIC_WORKFLOWS.md -Pattern "DeepMind|file:///|60%"` → không có kết quả.
 - `Select-String -Path reports\AI_ENGINEERING_AGENTIC_WORKFLOWS.md -Pattern "## 8. NGUỒN"` → có 1 kết quả.
 
-- [ ] T7 xong
+- [x] T7 xong
 
 ---
 
