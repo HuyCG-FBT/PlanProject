@@ -1,0 +1,12 @@
+# Game build & archive (chỉ đọc, không versioning)
+Booster Pack Heroes/
+*.zip
+
+# Output phân tích/tra cứu thô
+analysis_output/
+.plans/scratch/
+.firecrawl/
+
+# OS
+Thumbs.db
+desktop.ini
