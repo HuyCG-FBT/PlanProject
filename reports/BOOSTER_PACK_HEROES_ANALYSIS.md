@@ -1,88 +1,81 @@
-# BÁO CÁO PHÂN TÍCH TOÀN DIỆN: CẤU TRÚC TÀI NGUYÊN VÀ KIẾN TRÚC GAME "BOOSTER PACK HEROES"
+# BÁO CÁO PHÂN TÍCH CHUYÊN SÂU & ĐÁNH GIÁ CÔNG CỤ: "BOOSTER PACK HEROES" (UNITY 6 IL2CPP X64)
 
 ---
 
-## 1. THÔNG TIN TỔNG QUAN HỆ THỐNG
-* **Tên sản phẩm:** Booster Pack Heroes
-* **Nhà phát triển (Developer):** zup games
-* **Game Engine:** Unity (Phiên bản hỗ trợ DirectX 12, DirectStorage)
-* **Kiểu biên dịch (Scripting Backend):** IL2CPP x64 (Native C++ Assembly)
-* **Tổng dung lượng thư mục cài đặt:** **517.07 MB**
-* **Tổng số lượng tệp tin:** **39 tệp** (phân bổ trong 9 thư mục con)
-* **Vị trí lưu trữ dữ liệu người chơi (Save Game):** `%USERPROFILE%\AppData\LocalLow\zup games\Booster Pack Heroes` (tách biệt hoàn toàn khỏi thư mục game)
+## 1. THÔNG SỐ KỸ THUẬT CỐT LÕI (ĐÃ KIỂM CHỨNG THỰC TẾ)
+
+* **Tên trò chơi:** Booster Pack Heroes
+* **Nhà phát triển:** zup games
+* **Game Engine chính xác:** **Unity 6000.4.10f1** (feeafc12a938), hỗ trợ native **DirectX 12** và **DirectStorage**.
+* **Kiểu biên dịch:** IL2CPP x64 (Native C++ Binary `GameAssembly.dll`).
+* **Phiên bản IL2CPP Metadata:** **Version 39** (`0x27`, Magic `0xFAB11BAF`) với cơ chế chỉ mục co giãn (Variable-Width Indices) đặc trưng của Unity 6.
+* **Tình trạng mã hóa / DRM:** **100% Plaintext, KHÔNG mã hóa** (Không có XOR scrambling, không có Denuvo, VMProtect hay Beebyte Obfuscator). Mọi symbol lớp, hàm, trường (`CardEntryUI`, `hero_damage`, `DiscoveryScheduleManager`...) đều đọc được nguyên bản.
+* **Tổng dung lượng thư mục cài đặt:** **517.07 MB** (39 tệp tin).
+* **Đường dẫn dữ liệu người chơi:** `%USERPROFILE%\AppData\LocalLow\zup games\Booster Pack Heroes` (hoàn toàn độc lập khỏi thư mục cài đặt).
 
 ---
 
-## 2. BẢNG PHÂN LOẠI & ĐỊNH VỊ TÀI NGUYÊN (ASSET MAPPING)
+## 2. BẢN ĐỒ CHI TIẾT TÀI NGUYÊN (ASSET MAPPING)
 
-| Nhóm Tài Nguyên | Tên Tệp Tin / Đường Dẫn | Dung Lượng | Số Lượng Đo Được | Vai Trò & Nội Dung Cụ Thể |
+| Loại Tài Nguyên | Đường Dẫn Tệp Tin | Dung Lượng | Số Lượng Thực Tế | Cơ Chế Lưu Trữ & Điểm Lưu Ý Kỹ Thuật |
 | :--- | :--- | :--- | :--- | :--- |
-| **Nhạc Nền (BGM)** | `Booster Pack Heroes_Data/sharedassets1.resource` | **73.03 MB** | **159 Audio Clips** | Chứa toàn bộ nhạc nền gameplay (Battle BGM), âm thanh chiến đấu theo từng wave, âm thanh quái vật. Đóng gói chuẩn **FSB5 (FMOD SoundBank 5)**. |
-| **Hiệu Ứng Âm Thanh (SFX)** | `Booster Pack Heroes_Data/resources.resource` | **20.87 MB** | **235 Audio Clips** | Chứa âm thanh toàn cục (Global SFX): Tiếng xé/mở gói bài (*Pack Ripping*), click UI, tiếng nhặt coin/gem, hiệu ứng âm thanh kỹ năng. |
-| **Đồ Họa & Sprite Thẻ Bài** | `Booster Pack Heroes_Data/sharedassets1.assets.resS` | **148.33 MB** | ~ Hàng trăm texture | Tệp dung lượng lớn nhất game. Chứa dữ liệu streaming thô: Sprite Atlas thẻ bài nhân vật Hero, quái vật Enemy, hiệu ứng hạt (VFX), hoạt ảnh. |
-| **Giao Diện & Icon Pack** | `Booster Pack Heroes_Data/resources.assets.resS` | **60.08 MB** | ~ Hàng chục texture | Dữ liệu texture khung thẻ bài (Card frame), capsule icon các gói bài, biểu tượng UI dùng chung. |
-| **Cấu Trúc Đối Tượng & Meta** | `Booster Pack Heroes_Data/sharedassets1.assets` | **5.52 MB** | 57 Sprite refs | Chứa cấu trúc phân cấp GameObject, liên kết Material, Shader (DirectX 12) và định danh thẻ bài của Scene 1. |
-| **Tài Nguyên Toàn Cục** | `Booster Pack Heroes_Data/resources.assets` | **64.90 MB** | 51 Sprite, 21 Shader refs | Chứa dữ liệu các prefab, ScriptableObject định nghĩa chỉ số ban đầu được gọi qua `Resources.Load()`. |
-| **Mã Nguồn Logic Gameplay** | `GameAssembly.dll` | **67.95 MB** | Toàn bộ mã C# | Mã C# đã biên dịch sang mã máy C++ x64. Chứa logic mở thẻ gacha, tính damage, AI di chuyển của quái, hệ thống relic/upgrade. |
-| **Metadata Phản Chiếu** | `Booster Pack Heroes_Data/il2cpp_data/Metadata/global-metadata.dat` | **13.63 MB** | Toàn bộ định danh | Chứa bảng tra cứu tên Class, tên hàm (Method), trường dữ liệu (Field) và chuỗi ký tự (Strings) của C#. |
-| **Unity Engine Core** | `UnityPlayer.dll` + `Booster Pack Heroes.exe` | **35.84 MB** | Engine Runner | Bộ nạp thực thi và điều phối vòng lặp render, âm thanh và bộ nhớ. |
-| **DirectX 12 & Storage** | `D3D12/D3D12Core.dll`, `dstoragecore.dll`, `dstorage.dll` | **6.12 MB** | Driver / API | Hỗ trợ DirectStorage giúp load texture và audio streaming từ ổ cứng với tốc độ cực cao. |
-| **Bản Quyền & DRM** | `Booster Pack Heroes_Data/Plugins/x86_64/steam_api64.dll` | **0.30 MB** | Steam SDK | Giao tiếp với Steam Client (License Check, Cloud Save, Thành tựu). |
+| **Nhạc Nền Gameplay (BGM)** | `Booster Pack Heroes_Data/sharedassets1.resource` | **73.03 MB** | **159 Audio Clips** | Đóng gói dạng FSB5 Mode 15 (Vorbis). **Lưu ý:** Container FSB5 có `nameTableSize = 0` (không lưu tên file). Toàn bộ 159 tên file gốc nằm trong `sharedassets1.assets`. |
+| **Hiệu Ứng Âm Thanh (SFX)** | `Booster Pack Heroes_Data/resources.resource` | **20.87 MB** | **235 Audio Clips** | Toàn bộ SFX mở thẻ bài, click UI, tiếng nhặt đồ. Đóng gói FSB5 không tên; 235 tên gốc được lưu trong `resources.assets`. |
+| **Sprite Thẻ Bài & Quái Vật** | `Booster Pack Heroes_Data/sharedassets1.assets.resS` | **148.33 MB** | 183 Texture Streams | Texture độ phân giải cao của Hero, quái vật Enemy và VFX. |
+| **Giao Diện & Icon Pack** | `Booster Pack Heroes_Data/resources.assets.resS` | **60.08 MB** | 153 Texture Streams | Texture khung card, capsule icon của 10 gói bài. |
+| **Metadata Đối Tượng** | `Booster Pack Heroes_Data/sharedassets1.assets` | **5.52 MB** | 57 Sprite refs | Chứa định danh đối tượng Scene 1: `hero_shotgun`, `heroGuardian`, `enemySkeleton`, `Pack_8_Chaos`... |
+| **Tài Nguyên Toàn Cục** | `Booster Pack Heroes_Data/resources.assets` | **64.90 MB** | 51 Sprite, 21 Shaders | Chứa ScriptableObjects, Prefabs nạp động qua `Resources.Load()`. |
+| **Mã Nguồn Logic Gameplay** | `GameAssembly.dll` | **67.95 MB** | 166 Assemblies | Logic C# biên dịch C++ Native (damage, tỉ lệ mở gacha, cơ chế relic). |
+| **Bảng Tra Cứu Ký Tự** | `il2cpp_data/Metadata/global-metadata.dat` | **13.63 MB** | Metadata v39 | Lưu toàn bộ định danh C# nguyên bản không mã hóa. |
+| **Khởi Chạy & Đồ Họa** | `UnityPlayer.dll`, `D3D12/`, `dstorage*.dll` | **48.08 MB** | Runtime | DirectX 12 & DirectStorage stream dữ liệu tốc độ cao. |
 
 ---
 
-## 3. DANH SÁCH CHỦ THỂ NỘI DUNG ĐÃ NHẬN DIỆN (CONTENT AUDIT)
+## 3. ĐÁNH GIÁ VÀ LỰA CHỌN CÔNG CỤ TỐI ƯU (EVALUATION MATRIX)
 
-Qua quét chuỗi dữ liệu trong các tệp `.assets`, các nhóm thực thể chính trong game gồm có:
+### A. Công cụ Dịch ngược Mã Nguồn (IL2CPP Code Reversing)
+* ❌ **Perfare Upstream Il2CppDumper (v6.7.46):** **KHÔNG DÙNG ĐƯỢC.** Chỉ hỗ trợ tối đa Metadata v31. Khi chạy trên game Unity 6 (Metadata v39) sẽ ném ngoại lệ `Unsupported metadata version`.
+* 🥇 **Rodroid's Il2CppDumper (v6.1.0) [Rust / Tauri]:** **LỰA CHỌN SỐ 1 CHO REVERSING/IDA.** Hỗ trợ hoàn hảo Unity 6 Metadata v39 (Variable-Width Indices), xuất `dump.cs`, `il2cpp.h` và `script.json` nạp trực tiếp vào Ghidra/IDA Pro.
+* 🥈 **AssetRipper (v2.0.0 Standalone):** **LỰA CHỌN SỐ 1 CHO TÁI TẠO C# PROJECT.** Tích hợp LibCpp2IL mới nhất hỗ trợ Unity 6, tự động tạo lại solution C# nguyên bản.
 
-### A. Danh sách Nhân vật (Heroes):
-* `hero_shotgun` (Xạ thủ súng săn)
-* `hero_beastmaster` (Bậc thầy huấn luyện thú)
-* `heroGuardian` (Hộ vệ phòng thủ)
-* `heroMonk` (Tu sĩ)
-* `hero_bloodmage` (Pháp sư máu)
-* `hero_dinoRider` / `hero_dino` / `hero_rider` (Kỵ sĩ khủng long)
-* `hero_icebourne` (Băng nhân)
-* `hero_skelewhee` (Chiến binh xương xe)
-* `heroSquire3` (Cận vệ)
-* `hero_warlord` (Lãnh chúa chiến tranh)
-* `hero_fisher` (Ngư phủ)
-* `hero_treant` (Người cây)
+### B. Công cụ Trích xuất Âm Thanh & Nhạc Nền (Audio Extraction)
+* ⚠️ **vgmstream-cli:** Mặc dù giải mã FSB5 rất nhanh, nhưng do container FSB5 của game không chứa bảng tên (`nameTableSize = 0`), công cụ sẽ xuất ra 394 file đánh số thứ tự mù (`001.wav`, `002.wav`...).
+* 🥇 **AssetStudio.CLI (Razviar Fork v2.4.1):** **LỰA CHỌN HOÀN HẢO NHẤT.**
+  - Đọc chéo metadata từ file `.assets` sang `.resource`, tự động đặt đúng 100% tên nguyên bản (`BloodMage_Shard_Impact.wav`, `03_Ice_Explosion.wav`, `Sketchbook 2024-03-30_02.wav`...).
+  - Chạy Headless CLI trên môi trường **.NET 8.0 / 10.0** sẵn có của máy chủ.
 
-### B. Danh sách Gói thẻ bài (Booster Packs):
-* `Pack_8_Chaos` (Gói Hỗn Mang)
-* `Pack_9_Tome` (Gói Cổ Thư)
-* `Pack_7_Frost` (Gói Băng Giá)
-* Các định dạng ảnh đóng gói: `Pack_small_462x174`, `Pack_LibraryCapsule_600x900`, `Card_Elements`, `card_Item`.
+### C. Công cụ Trích xuất Đồ Họa Thẻ Bài & Quái Vật (Sprite Sheet Extraction)
+* 🥇 **AssetStudio.CLI (Razviar Fork v2.4.1):** Cắt tự động Sprite từ Sprite Atlas theo đúng bounding box và giữ kênh Alpha (PNG trong suốt). Hỗ trợ lọc qua cờ `--filter "hero_|Pack_|enemy"`.
+* 🥈 **AssetRipper (v2.0.0):** Xuất toàn bộ Prefab và Sprite với cấu trúc thư mục Unity chuẩn.
 
-### C. Kẻ địch (Enemies & Waves):
-* `enemySkeleton` (Bộ xương) và các biến thể quái vật theo wave.
+### D. Bộ Kỹ Năng Agentic & Trình Duyệt Tự Động Hóa
+* **`agent-browser` (v0.38.1):** Kết nối Chrome CDP port 9222, chụp ảnh màn hình có chú thích tọa độ click (`--annotate`), tự động tải binary release từ GitHub.
+* **`agent-reach` (v1.5.0):** 5/16 kênh sẵn sàng (Jina Reader, V2EX, RSS, Bilibili, Xueqiu), tra cứu sâu không tốn token chat.
+* **`boost` (Micro-Planner):** Quy chuẩn giao việc 5 thành tố (`Context Slice`, `Target`, `Contract`, `Negative Constraints`, `Verification Gate`), ngăn chặn tình trạng model nhỏ đọc mò gây lãng phí token.
 
 ---
 
-## 4. HƯỚNG DẪN QUY TRÌNH KỸ THUẬT XỬ LÝ VỀ SAU (OPERATIONAL RUNBOOK)
+## 4. QUY TRÌNH TỰ ĐỘNG HÓA DÒNG LỆNH (HEADLESS RUNBOOK)
 
-Khi cần thực hiện các tác vụ xử lý chuyên sâu, sử dụng các công cụ và quy trình sau:
+Hệ thống máy chủ đã có sẵn **.NET 8.0 SDK** và **.NET 10.0 SDK**. Toàn bộ quy trình có thể chạy tự động bằng PowerShell:
 
-### Tác Vụ 1: Trích Xuất File Nhạc & Âm Thanh Ra `.wav` hoặc `.ogg`
-* **Nguồn tệp:** `sharedassets1.resource` và `resources.resource`.
-* **Công cụ:**
-  - **AssetStudioGUI:** Bấm `File > Load Folder` > chọn `Booster Pack Heroes_Data` > sang tab `Asset List` > Lọc `Type: AudioClip` > Chuột phải chọn `Export Selected Assets`. Tool sẽ tự động giải mã từ FSB5 thành file `.wav` chuẩn.
-  - **vgmstream / fsb_extractor:** Công cụ CLI giải mã hàng loạt file FSB5.
+```powershell
+# 1. Tạo thư mục công cụ
+New-Item -ItemType Directory -Force -Path "D:\FPT\Harness\SteamBP\tools" | Out-Null
 
-### Tác Vụ 2: Trích Xuất Hình Ảnh Thẻ Bài & Sheet Quái Ra `.png`
-* **Nguồn tệp:** `sharedassets1.assets.resS` và `resources.assets.resS`.
-* **Công cụ:**
-  - **AssetStudioGUI:** Lọc `Type: Sprite` hoặc `Texture2D` > Tìm theo từ khóa `hero_`, `enemy`, `Pack_` > Chuột phải chọn `Export > Selected assets`.
-  - **AssetRipper:** Tạo lại toàn bộ cấu trúc Sprite Atlas và Texture nguyên bản.
+# 2. Tải AssetStudio.CLI (Razviar Fork v2.4.1)
+Invoke-WebRequest -Uri "https://github.com/Razviar/assetstudio/releases/download/v2.4.1/AssetStudio-net8.0-win.zip" `
+  -OutFile "D:\FPT\Harness\SteamBP\tools\AssetStudio.zip"
+Expand-Archive -Path "D:\FPT\Harness\SteamBP\tools\AssetStudio.zip" -DestinationPath "D:\FPT\Harness\SteamBP\tools\AssetStudio" -Force
 
-### Tác Vụ 3: Đọc Logic Code & Bảng Chỉ Số Game (Reverse Engineering)
-* **Nguồn tệp:** `GameAssembly.dll` và `global-metadata.dat`.
-* **Công cụ:**
-  - Sử dụng **Il2CppDumper**:
-    ```bash
-    Il2CppDumper.exe "<path_to_GameAssembly.dll>" "<path_to_global-metadata.dat>" "<output_directory>"
-    ```
-  - **Kết quả sinh ra:**
-    - `dump.cs`: Chứa toàn bộ cấu trúc class C#, hàm tính toán, chỉ số HP, Damage, giá tiền mở pack.
-    - `script.json` / `il2cpp.h`: Dùng để nạp vào **Ghidra** hoặc **IDA Pro** nếu cần xem mã assembly chi tiết.
+# 3. Trích xuất toàn bộ 394 tệp Âm thanh có đầy đủ tên gốc ra WAV
+$gameData = "D:\FPT\Harness\SteamBP\Booster Pack Heroes\Booster Pack Heroes\Booster Pack Heroes_Data"
+$outAudio = "D:\FPT\Harness\SteamBP\extracted_assets\Audio"
+& "D:\FPT\Harness\SteamBP\tools\AssetStudio\AssetStudio.CLI.exe" $gameData $outAudio `
+  --type AudioClip --group_assets_type ByType --silent
+
+# 4. Trích xuất Sprite Thẻ bài và Nhân vật Hero ra PNG trong suốt
+$outSprites = "D:\FPT\Harness\SteamBP\extracted_assets\Sprites"
+& "D:\FPT\Harness\SteamBP\tools\AssetStudio\AssetStudio.CLI.exe" $gameData $outSprites `
+  --type Sprite --filter "(hero_|Pack_|Card|enemy)" --image_format Png --group_assets_type ByType --silent
+```
